@@ -1,6 +1,5 @@
 import "./App.css";
-import { Box, Container, FormGroup } from "@mui/material";
-import SearchBar from "./components/SearchBar";
+import { Box, Container } from "@mui/material";
 import ProductTable from "./components/ProductTable";
 
 function App() {
@@ -17,7 +16,7 @@ function App() {
     <>
       <Container maxWidth="sm">
         <Box
-          height="70vh"
+          height="100vh"
           sx={{
             bgcolor: "white",
             display: "flex",
@@ -25,10 +24,6 @@ function App() {
             p: 3,
           }}
         >
-          <FormGroup sx={{ alignContent: "center" }}>
-            <SearchBar />
-          </FormGroup>
-
           <ProductTable products={PRODUCTS} />
         </Box>
       </Container>

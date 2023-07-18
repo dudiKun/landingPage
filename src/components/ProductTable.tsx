@@ -7,7 +7,9 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  FormGroup,
 } from "@mui/material";
+import SearchBar from "./SearchBar";
 
 const COLUMNS = ["Name", "Price"];
 
@@ -105,6 +107,9 @@ const ProductTable = ({ products }: ProductTableProps) => {
         }}
       >
         <TableContainer component={Paper}>
+          <FormGroup sx={{ alignContent: "center" }}>
+            <SearchBar />
+          </FormGroup>
           <Table aria-label="simple table">
             <ProductTableColumns columns={COLUMNS} />
             <TableBody>{rows}</TableBody>
