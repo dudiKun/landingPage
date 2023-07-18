@@ -7,6 +7,7 @@ function SearchBar() {
       <FormControlLabel
         control={<Checkbox defaultChecked />}
         label="Only show in stock goods"
+        sx={{ p: 3 }}
       />{" "}
     </>
   );
