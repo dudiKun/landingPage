@@ -11,18 +11,16 @@ import {
 
 const COLUMNS = ["Name", "Price"];
 
-interface IProductCategoryRowProps {
+interface ProductCategoryRowProps {
   category: string;
 }
-function ProductCategoryRow({ category }: IProductCategoryRowProps) {
+function ProductCategoryRow({ category }: ProductCategoryRowProps) {
   return (
-    <TableHead>
-      <TableRow>
-        <TableCell colSpan={9999} align="center" sx={{ fontWeight: 700 }}>
-          {category}
-        </TableCell>
-      </TableRow>
-    </TableHead>
+    <TableRow>
+      <TableCell colSpan={9999} align="center" sx={{ fontWeight: 700 }}>
+        {category}
+      </TableCell>
+    </TableRow>
   );
 }
 
@@ -33,7 +31,7 @@ interface ProductProps {
   price: number;
 }
 
-function ProductRow({ name, price, isStocked, category }: ProductProps) {
+function ProductRow({ name, price, isStocked }: ProductProps) {
   const productName = isStocked ? (
     name
   ) : (
@@ -50,11 +48,11 @@ function ProductRow({ name, price, isStocked, category }: ProductProps) {
   );
 }
 
-interface IProductTableColumns {
+interface ProductTableColumnsProps {
   columns: string[];
 }
 
-const ProductTableColumns = ({ columns }: IProductTableColumns) => {
+const ProductTableColumns = ({ columns }: ProductTableColumnsProps) => {
   return (
     <TableHead>
       <TableRow>
@@ -73,6 +71,30 @@ interface ProductTableProps {
 }
 
 const ProductTable = ({ products }: ProductTableProps) => {
+  const rows: JSX.Element[] = [];
+  let lastCategory: string | null = null;
+
+  products.forEach((product) => {
+    if (product.category !== lastCategory) {
+      rows.push(
+        <ProductCategoryRow
+          category={product.category}
+          key={product.category}
+        />
+      );
+    }
+
+    rows.push(
+      <ProductRow
+        price={product.price}
+        name={product.name}
+        isStocked={product.isStocked}
+        category={product.category}
+      />
+    );
+    lastCategory = product.category;
+  });
+
   return (
     <>
       <Box
@@ -84,18 +106,8 @@ const ProductTable = ({ products }: ProductTableProps) => {
       >
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
-            <ProductCategoryRow category="Fruits" />
-            <ProductTableColumns columns={COLUMNS}></ProductTableColumns>
-            {products.map((product) => (
-              <TableBody>
-                <ProductRow
-                  category={product.category}
-                  name={product.name}
-                  price={product.price}
-                  isStocked={product.isStocked}
-                />
-              </TableBody>
-            ))}
+            <ProductTableColumns columns={COLUMNS} />
+            <TableBody>{rows}</TableBody>
           </Table>
         </TableContainer>
       </Box>
