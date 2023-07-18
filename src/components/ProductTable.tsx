@@ -84,7 +84,6 @@ const ProductTable = ({ products }: ProductTableProps) => {
       >
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
-            <ProductCategoryRow category="Fruits" />
             <ProductTableColumns columns={COLUMNS}></ProductTableColumns>
             {products.map((product) => (
               <TableBody>
