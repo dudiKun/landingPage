@@ -4,14 +4,26 @@ on:
     branches:
       - "main"
       - "release"
+  workflow_call:
+    secrets:
+      github-token:
+        required: true
 
 jobs:
   eslint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v1
-      - name: Install package manager
-        run: yarn
+      - uses: actions/checkout@v3
 
-      - name: Run ESLint
-        run: eslint --ext .ts , .js
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Run ESLint suggestion
+        uses: CatChen/eslint-suggestion-action@v2
+        with:
+          request-changes: true
+          fail-check: true
+          github-token: ${{ secrets.github-token }}
+          directory: "./src"
+          targets: "./src"
