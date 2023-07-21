@@ -10,6 +10,7 @@ import {
   FormGroup,
 } from "@mui/material";
 import SearchBar from "./SearchBar";
+import { useState } from "react";
 
 const COLUMNS = ["Name", "Price"];
 
@@ -73,10 +74,27 @@ interface ProductTableProps {
 }
 
 const ProductTable = ({ products }: ProductTableProps) => {
+  const [filterText, setFilterText] = useState("");
+  const [inStockOnly, setInStockOnly] = useState(false);
+
+  const handleFilterTextChange = (text: string) => {
+    setFilterText(text);
+  };
+
+  const handleInStockOnlyChange = (checked: boolean) => {
+    setInStockOnly(checked);
+  };
+
   const rows: JSX.Element[] = [];
   let lastCategory: string | null = null;
 
   products.forEach((product) => {
+    if (product.name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
+      return;
+    }
+    if (inStockOnly && !product.isStocked) {
+      return;
+    }
     if (product.category !== lastCategory) {
       rows.push(
         <ProductCategoryRow
@@ -108,8 +126,14 @@ const ProductTable = ({ products }: ProductTableProps) => {
       >
         <TableContainer component={Paper}>
           <FormGroup sx={{ alignContent: "center" }}>
-            <SearchBar />
+            <SearchBar
+              filterText={filterText}
+              inStockedOnly={inStockOnly}
+              onFilterTextChange={handleFilterTextChange}
+              onInStockOnlyCheck={handleInStockOnlyChange}
+            />
           </FormGroup>
+
           <Table aria-label="simple table">
             <ProductTableColumns columns={COLUMNS} />
             <TableBody>{rows}</TableBody>
