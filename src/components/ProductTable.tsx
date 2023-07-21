@@ -13,6 +13,7 @@ import SearchBar from "./SearchBar";
 import { useState } from "react";
 
 const COLUMNS = ["Name", "Price"];
+// Add comments to test actions
 
 interface ProductCategoryRowProps {
   category: string;
