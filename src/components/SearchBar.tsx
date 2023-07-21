@@ -1,12 +1,36 @@
 import { Checkbox, FilledInput, FormControlLabel } from "@mui/material";
 
-function SearchBar() {
+interface SearchBarProps {
+  filterText: string;
+  inStockedOnly: boolean;
+  onFilterTextChange: (filterText: string) => void;
+  onInStockOnlyCheck: (checked: boolean) => void;
+}
+
+function SearchBar({
+  filterText,
+  inStockedOnly,
+  onFilterTextChange,
+  onInStockOnlyCheck,
+}: SearchBarProps) {
   return (
     <>
-      <FilledInput fullWidth size="small" placeholder="Search"></FilledInput>
+      <FilledInput
+        value={filterText}
+        fullWidth
+        size="small"
+        placeholder="Search"
+        onChange={(e) => onFilterTextChange(e.target.value)}
+      ></FilledInput>
       <FormControlLabel
-        control={<Checkbox defaultChecked />}
-        label="Only show in stock goods"
+        control={
+          <Checkbox
+            checked={inStockedOnly}
+            defaultChecked
+            onChange={(e) => onInStockOnlyCheck(e.target.checked)}
+          />
+        }
+        label="Only show in stock"
         sx={{ p: 3 }}
       />{" "}
     </>
