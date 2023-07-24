@@ -18,12 +18,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
+          cache: npm
+
+      - name: Install npm
+        run: npm ci
 
       - name: Run ESLint suggestion
-        uses: CatChen/eslint-suggestion-action@v2
-        with:
-          request-changes: true
-          fail-check: true
-          github-token: ${{ secrets.github-token }}
-          directory: "./src"
-          targets: "./src"
+        run: npm run lint
