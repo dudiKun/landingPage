@@ -23,5 +23,8 @@ jobs:
       - name: Install npm
         run: npm ci
 
+      - name: Install eslint-plugin-react
+        run: npm install eslint-plugin-react@latest --save-dev
+
       - name: Run ESLint suggestion
         run: npm run lint
