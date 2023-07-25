@@ -20,9 +20,6 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install npm
-        run: npm ci
-
       - name: Install eslint-plugin-react
         run: npm install eslint-plugin-react@latest --save-dev
 
