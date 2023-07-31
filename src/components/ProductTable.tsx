@@ -61,7 +61,7 @@ const ProductTableColumns = ({ columns }: ProductTableColumnsProps) => {
     <TableHead>
       <TableRow>
         {columns.map((column) => (
-          <TableCell align="center" sx={{ fontWeight: 700 }}>
+          <TableCell key={columns.length} align="center" sx={{ fontWeight: 700 }}>
             {column}
           </TableCell>
         ))}
